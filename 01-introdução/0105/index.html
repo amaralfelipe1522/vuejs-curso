@@ -24,6 +24,16 @@
     </div>
 
     <script>
+        
+    // Com Vue
+        const vm = new Vue({
+            el: "#prod",
+            data: {
+                preco: 60,
+                total: 0,
+            }
+        });
+
         // Sem Vue
         const dadosCamisa = {
             preco: 50,
@@ -56,15 +66,7 @@
         }
         adicionar.addEventListener("click",add);
         remover.addEventListener("click",dec);
-
-    // Com Vue
-        const vm = new Vue({
-            el: "#prod",
-            data: {
-                preco: 60,
-                total: 0,
-            }
-        });
+        
     </script>
 
 
