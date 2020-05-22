@@ -4,9 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/vue.js"></script>
-    <title>Document</title>
+    <title>Quadrado</title>
 </head>
 <body>
+    <!-- Expressões -->
+    <div id="app">
+        <p>Quadrado de {{lado}} lados</p>
+        <p>Área do Quadrado: {{lado*lado}}</p>
+        <p>Perímetro do Quadrado: {{lado*4}}</p>
+        <p>Quadrado válido? {{lado > 6 ? status = false : true}}</p>
+        <button @click="lado++">Adicionar Lados</button>
+        <button @click="lado--">Remover Lados</button>
+        <!-- Diretivas -->
+        <div :style="{background: cor}">
+            <a v-bind:href="href">Sem ternário</a><br>
+            <a :href="status ? href : ''">Com ternário</a>
+        </div>
+        <div v-if="status"> 
+            <h2>v-if elimina o DOM caso atenda a operação</h2>
+        </div>
+        <div v-show="status"> 
+            <h2>v-show apenas aplica display:none no DOM</h2>
+        </div>
+        <input v-model="cor" type="color"> {{cor}}
+    </div>
+
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                lado: 4,
+                status: true,
+                href: "https://github.com/amaralfelipe1522",
+                cor: "#fff",
+            }
+        })
+
+    </script>
     
 </body>
 </html>
