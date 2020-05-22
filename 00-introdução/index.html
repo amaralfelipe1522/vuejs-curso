@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="vue.js"></script>
+    <title>Vue Test</title>
+</head>
+<body>
+    <div id="app">
+        {{nome}},{{idade}},{{sexo}},{{curso.nome}},{{curso.local}}
+    </div>
+    <script>
+        // options = {
+        //     el: '#app',
+        //     data: {
+        //         nome: "Felipe Amaral",
+        //         idade: 29,
+        //         sexo: "Masculino",
+        //         curso: {
+        //             nome: "Sistemas de Informação",
+        //             local: "UMC",
+        //         }
+        //     }
+        // }
+        // const vm = new Vue(options);
+        
+        const vm = new Vue({el: '#app',
+            data: {
+                nome: "Felipe Amaral",
+                idade: 29,
+                sexo: "Masculino",
+                curso: {
+                    nome: "Sistemas de Informação",
+                    local: "UMC",
+                }
+            }
+        })
+        // toda variável criada em data gera um get e um set no Vue para que possamos manipular dessa forma:
+        vm.curso.local = "Universidade de Mogi das Cruzes"
+
+        console.log(vm)
+    </script>
+</body>
+</html>
