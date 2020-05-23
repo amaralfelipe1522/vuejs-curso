@@ -7,6 +7,33 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <div id="app">
+        <p>1. {{jogos.jogo1}} - {{plataformas[0]}}</p>
+        <p>2. {{jogos.jogo2}} - {{plataformas[1]}}</p>
+        <p>3. {{jogos}} - {{plataformas}}</p>
+        <!-- <p>4. {{jogo1}}</p> -->
+        <p>5. {{$data}}</p>
+        <p>6. {{jogos.jogo3}} - {{plataformas[2]}}</p>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                jogos: {
+                    jogo1: "Monster Hunter",
+                    jogo2: "Persona 3",
+                    jogo3: "",
+                },
+                plataformas: ["PC", "PSP", null]
+            }
+        })
+
+        setTimeout(() => {
+            vm.jogos.jogo3 = "Dragon Quest"
+            vm.plataformas[2] = "NES"
+        },3000);
+
+    </script>
 </body>
 </html>
