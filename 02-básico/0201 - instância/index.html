@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{animal}}</p>
+        <p>{{nome}}</p>
+        <p>{{displayAnimal}}</p>
+    </div>
+
+    <div id="app1">
+        <p>{{animal}}</p>
+        <p>{{nome}}</p>
+        <p>{{amigo}}</p>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                animal: "cachorro",
+                nome: "Shaman",
+            },
+            computed: {
+                displayAnimal() {
+                    setTimeout(function() {
+                        console.log('This do SetTimeOut aqui será o Window',this)
+                    },1000)
+                    setTimeout(() => {
+                        console.log('This do SetTimeOut aqui será Vue, por conta do arrow function',this)
+                    },1000)
+                    return this.nome + ' ' + this.animal
+                }
+            }
+        })
+
+        const vm2 = new Vue({
+            el: "#app1",
+            data: {
+                animal: "gato",
+                nome: "Chun",
+                amigo: vm.nome
+            }
+        })
+    </script>
+</body>
+</html>
