@@ -7,6 +7,55 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <div id="app">
+        <p>{{valor}} - {{produto}}</p>
+        <button @click="adicionar">Adicionar 1</button>
+        <button @click="remover">Remover 1</button>
+        <button @click="valor++">Adicionar 2</button>
+        <button @click="valor--">Remover 2</button>
+        <button @click="alterarProduto('Jogo')">Jogo</button>
+        <button @click="alterarProduto('Pastel')">Pastel</button>
+        <button @click="evento">Evento</button>
+        <p>Ações da Apple</p>
+        <p>Valor atual: {{acoes.latestPrice}}</p>
+        <p>Última atualização em: {{acoes.latestTime}}</p>
+        <button @click="getPrice">Mostrar Valor</button>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                valor: 0,
+                produto: "",
+                acoes: {}
+            },
+            methods: {
+                adicionar: function() {
+                    this.valor++;
+                },
+                //ES6
+                remover() {
+                    this.valor--;
+                },
+                alterarProduto(nome) {
+                    this.evento(this.produto = nome);
+                    this.evento("Produto alterado!");
+                },
+                evento(event) {
+                    console.log(event);
+                }, 
+                getPrice() {
+                    let url = "https://cloud.iexapis.com/stable/stock/aapl/quote?token=pk_c7e6973d3efc4779a14a16f35d91edd2";
+                    fetch(url)
+                        .then(resp => resp.json())
+                        .then(data => {
+                            this.acoes = data
+                            console.log(data)
+                        })
+                }
+            }
+        })
+    </script>
 </body>
 </html>
