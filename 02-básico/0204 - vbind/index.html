@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/vue.js"></script>
+    <title>Document</title>
+    <!-- Permite a utilização de expressões dentro de atributos -->
+</head>
+<body>
+    <div id="app">
+        <p>Link: <a :href="link" target="_blank">Clique aqui</a></p>
+        <button @click="alterarLink('github')">Github</button>
+        <button @click="alterarLink('dockerhub')">Dockerhub</button>
+        <button @click="alterarLink('batata')">Batata</button>
+        <p :class="cor" class="ativo">Exemplo de múltiplas classes</p>
+        <p :class="ternario ? cor : 'preto'">Exemplo de ternário</p>
+        <br>
+        <br>
+        <button @click="getAcoes1">Buscar ações da Apple</button>
+        <p :style="color1">Nome da Empresa: {{acoes1.companyName}}</p>
+        <p :style="color1">Valor de Mercado: {{acoes1.marketCap}}</p>
+        <button @click="getAcoes2">Buscar ações da Google</button>
+        <p :style="color2">Nome da Empresa: {{acoes2.companyName}}</p>
+        <p :style="color2">Valor de Mercado: {{acoes2.marketCap}}</p>
+        <button @click="comparar">Comparação de valores</button>
+        <p>{{error}}</p>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                link: "",
+                cor: "azul",
+                ternario: false,
+                acoes1: {},
+                acoes2: {},
+                color1: "",
+                color2: "",
+                error: "",
+            },
+            methods: {
+                alterarLink(nome) {
+                    if (nome == "github") {
+                        this.link = "https://github.com/amaralfelipe1522";
+                    } else if (nome == "dockerhub") {
+                        this.link = "https://hub.docker.com/u/amaralfelipe1522"
+                    } else {
+                        this.link = "https://duckduckgo.com/"
+                    }
+                },
+                getAcoes1() {
+                    let url = "https://cloud.iexapis.com/stable/stock/aapl/quote?token=pk_c7e6973d3efc4779a14a16f35d91edd2";
+                    fetch(url)
+                    .then(resp => resp.json())
+                    .then(data => {
+                        this.acoes1 = data
+                    })
+                },
+                getAcoes2() {
+                    let url = "https://cloud.iexapis.com/stable/stock/googl/quote?token=pk_c7e6973d3efc4779a14a16f35d91edd2";
+                    fetch(url)
+                    .then(resp => resp.json())
+                    .then(data => {
+                        this.acoes2 = data
+                    })
+                },
+                comparar() {
+                    if (this.acoes1.marketCap > this.acoes2.marketCap) {
+                        this.color1 = "color:green";
+                        this.color2 = "color:red";
+                        this.error = "";
+                    } else if (this.acoes2.marketCap > this.acoes1.marketCap) {
+                        this.color2 = "color:green";
+                        this.color1 = "color:red";
+                        this.error = "";
+                    } else {
+                        this.color2 = "color:blue";
+                        this.color1 = "color:blue";
+                        this.error = "Possuem os mesmos valores de mercado";
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
