@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- Permite observar eventos nas tags -->
+    <!-- Possui modificadores como:
+        prevent: previne comportamentos Default do navegador
+        once: realiza apenas uma vez a função
+     -->
+    <div id="app">
+        <button v-on:click="status = !status">Alterar Boolean</button>
+        <div v-show="status">
+            <button @click="getEvent">getEvent</button>
+        </div>
+        <a href="#exemploURL" @click.prevent.once="getEvent">prevent.once</a>
+        <input type="text" @keyup.c="getEvent">
+        <div @mousemove="getMouse">
+            <p>Evento do mouse</p>
+            <p>Mouse X: {{mouse.x}}</p>
+            <p>Mouse Y: {{mouse.y}}</p>
+        </div>
+        <ul>
+            <li><a href="https://cloud.iexapis.com/stable/stock/aapl/quote?token=pk_c7e6973d3efc4779a14a16f35d91edd2" @click.prevent="getURL">Apple</a></li>
+            <li><a href="https://cloud.iexapis.com/stable/stock/googl/quote?token=pk_c7e6973d3efc4779a14a16f35d91edd2" @click.prevent="getURL">Google</a></li>
+            <li><a href="https://cloud.iexapis.com/stable/stock/amzn/quote?token=pk_c7e6973d3efc4779a14a16f35d91edd2" @click.prevent="getURL">Amazon</a></li>
+        </ul>
+        <div>
+            <p>Company Name: {{acoes.companyName}}</p>
+            <p>Latest Price: {{acoes.latestPrice}}</p>
+            <p>Market Cap: {{acoes.marketCap}}</p>
+        </div>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                status: true,
+                mouse: "",
+                acoes: {},
+            },
+            methods: {
+                getEvent(event) {
+                    console.log("Chamou!!",event.key) //mostrando apenas a tecla C
+                },
+                getMouse(event) {
+                    this.mouse = event
+                },
+                getURL(event) {
+                    let url = event.currentTarget.href;
+                    this.getAcoes(url);
+                },
+                getAcoes(url) {
+                    fetch(url)
+                    .then(resp => resp.json())
+                    .then(data => {
+                        this.acoes = data;
+                    })
+                },
+            }
+        })
+    </script>
+</body>
+</html>
