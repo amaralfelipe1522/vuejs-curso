@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- v-if elimina o elemento do DOM -->
+    <!-- v-show define o valor de display do elemento para NONE -->
+    <div id="app">
+        <button @click="status1 = !status1">Boolean 1</button>
+        <!-- template no lugar de DIV -->
+        <template v-if="status1">
+            <button @click="status2 = !status2">Boolean 2</button>
+            <p v-if="status2" style="color:green;"><b>Verdadeiro</b></p>
+            <p v-else style="color: red;"><b>Falso</b></p>
+        </template>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                status1: true,
+                status2: true,
+            },
+        })
+    </script>
+    
+    <!-- Exemplo de Carrinho de Compras -->
+    <div id="app2">
+        <p>Qtd no carrinho: {{carrinho}}</p>
+        <p>Estoque atual: {{estoque}}</p>
+        <!-- boolean - 0 1 -->
+        <button v-if="estoque" @click="adicionar">Adicionar</button>
+        <button v-if="carrinho"@click="remover">Remover</button>
+        <p v-if="estoque==0">Sem estoque</p>
+        <p v-if="carrinho==0">Carrinho vazio</p>
+    </div>
+
+    <script>
+        const vm2 = new Vue({
+            el: "#app2",
+            data: {
+                carrinho: 0,
+                estoque: 7,
+            },
+            methods: {
+                adicionar() {
+                    this.carrinho++;
+                    this.estoque--;
+                },
+                remover() {
+                    this.carrinho--;
+                    this.estoque++;
+                },
+            }
+        })
+    </script>
+
+</body>
+</html>
