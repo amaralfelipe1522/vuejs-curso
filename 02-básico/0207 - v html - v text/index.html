@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- v-html renderiza o conteúdo html de uma tag, modificando o innerHTML do elemento -->
+    <!-- não é muito seguro por injetar código diretamente -->
+    <div id="app">
+        <div v-html="link">
+            Tudo aqui dentro some
+        </div>
+        <!-- v-text renderiza o texto no conteúdo do elemento, como o innerText -->
+        <p>{{text}}</p>
+        <p v-text="text">Tudo aqui dentro some</p>
+        <!-- v-once renderiza apenas uma vez e não é reativo -->
+        <button @click="numero++">Incrementar</button>
+        <p>Número reativo: {{numero}}</p>
+        <p v-once>Número renderiza 1x: {{numero}}</p>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                link: "<a href='https://github.com/amaralfelipe1522' target='_blank'>Github</a>",
+                text: "Atumalaka",
+                numero: 0,
+            }
+        })
+    </script>
+</body>
+</html>
