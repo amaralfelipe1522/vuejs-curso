@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- Computed trabalha expressões isoladamentes -->
+    <div id="app">
+        {{totalDescontado}}
+        <ul>
+            <li v-for="(carro) in carrosAzuis">{{carro.marca}}: {{carro.cor}}</li>
+        </ul>
+        <button @click="remover">Remover</button>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                preco: 300,
+                desconto: 30,
+                carros: [
+                    {
+                        marca: "VW",
+                        cor: "Azul"
+                    },
+                    {
+                        marca: "Ford",
+                        cor: "Preto"
+                    },
+                    {
+                        marca: "Tesla",
+                        cor: "Azul"
+                    }
+                ],
+            },
+            computed: {
+                totalDescontado() {
+                    return "R$ " + (this.preco - this.desconto)
+                },
+                carrosAzuis() {
+                    const azuis = this.carros.filter(({cor}) => cor === "Azul")
+                    return azuis
+                }
+            },
+            methods: {
+                remover() {
+                    this.carros.pop();
+                    //Computed é reativo
+                }
+            },
+            watch: {
+                carros(valorNovo, valorAntigo) {// Watch fica de olho na propriedade carros e é ativado a cada reativação do mesmo
+                    this.desconto++
+                    console.log("Valor novo: ",valorNovo,". Valor antigo: ",valorAntigo)
+                    console.log("Carros foi modificado")
+                }
+            }, // Watch tb recebe eventos assincronos (exemplo na aula 0209-2)
+        })
+    </script>
+</body>
+</html>

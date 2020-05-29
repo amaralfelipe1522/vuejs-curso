@@ -9,9 +9,11 @@
 </head>
 <body>
     <div id="app">
-        <button @click="getCEP">Buscar CEP</button>
+        <button @click="getCEP(inputCEP)">Buscar CEP</button>
         <ul>
             <p>Dados do Endereço:</p>
+            <input type="text" placeholder="Digite o CEP" maxlength="8" v-model="inputCEP">
+            <p>v-model: {{inputCEP}}</p>
             <ul>
                 <li v-for="(dado, key, index) in dados">{{key}}: {{dado}}</li>
             </ul>
@@ -35,10 +37,11 @@
             data: {
                 dados: {},
                 cursos: {},
+                inputCEP: "",
             },
             methods: {
-                getCEP() {
-                    fetch("https://viacep.com.br/ws/08750580/json")
+                getCEP(cep) {
+                    fetch(`https://viacep.com.br/ws/${cep}/json`)
                     .then(resp => resp.json())
                     .then(resp => {
                         this.dados = resp
@@ -52,6 +55,17 @@
                     })
                 },
             },
+            watch: {
+                inputCEP(valorAtualDoInput) {
+                    // A cada digito no inputCEP, o Watch verifica se já tem 8 digitos.
+                    // Quando tiver 8 ele dispara a API
+                    if (valorAtualDoInput.length == 8) {
+                        this.getCEP(valorAtualDoInput)
+                    } else {
+                        console.log(valorAtualDoInput)
+                    }
+                }
+            }
         })
     </script>
 </body>
