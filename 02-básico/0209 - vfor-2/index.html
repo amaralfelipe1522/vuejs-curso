@@ -4,9 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/vue.js"></script>
+    <script src="/02-básico/0209 - vfor-2/cursos.json"></script>
     <title>Document</title>
 </head>
 <body>
-    
+    <div id="app">
+        <button @click="getCEP">Buscar CEP</button>
+        <ul>
+            <p>Dados do Endereço:</p>
+            <ul>
+                <li v-for="(dado, key, index) in dados">{{key}}: {{dado}}</li>
+            </ul>
+        </ul>
+        <button @click="getCursos">Buscar Cursos</button>
+        {{cursos}}
+        <ul>
+            <p>Dados dos Cursos</p>
+            <div v-for="(curso) in cursos">
+                <h2><a :href="curso.link">{{curso.curso}}</a></h1>
+                <ul>
+                    <li v-for="(aula) in curso.aulas">{{aula.nome}}: {{aula.tempo}}</li>
+                </ul>
+            </div>
+        </ul>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                dados: {},
+                cursos: {},
+            },
+            methods: {
+                getCEP() {
+                    fetch("https://viacep.com.br/ws/08750580/json")
+                    .then(resp => resp.json())
+                    .then(resp => {
+                        this.dados = resp
+                    })
+                },
+                getCursos() {
+                    fetch("/02-básico/0209 - vfor-2/cursos.json")
+                    .then(resp => resp.json())
+                    .then(resp => {
+                        this.cursos = resp
+                    })
+                },
+            },
+        })
+    </script>
 </body>
 </html>
