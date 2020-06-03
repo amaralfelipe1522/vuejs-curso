@@ -1,25 +1,60 @@
-<img src="https://governosp-my.sharepoint.com/:i:/r/personal/amaral_felipe_apoioprodesp_sp_gov_br/Documents/Arquivos%20de%20Chat%20do%20Microsoft%20Teams/Felipe%20-%20PC/popi/login.png?csf=1&web=1&e=jwfzjd" alt="tela-login" width="99%" height="90%">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>Nome completo: {{nomeCompleto}}</p>
+        <p>API de Capitais</p>
+        <button @click="getData">Buscar Capital</button>
+        <select name="countries" id="countries" v-model="paisSelecionado">
+            <option v-for="({name, capital}) in countriesData" :value="name">{{name}}</option>
+        </select>
+        <p>{{capitalSelecionada}}</p>
+        <!-- <ul>
+            <li v-for="(country, key) in countriesData">{{country.name}}: {{country.capital}}</li>
+        </ul> -->
+    </div>
 
-<img src="https://governosp-my.sharepoint.com/:i:/r/personal/amaral_felipe_apoioprodesp_sp_gov_br/Documents/Arquivos%20de%20Chat%20do%20Microsoft%20Teams/Felipe%20-%20PC/popi/conta-criada.png?csf=1&web=1&e=hO3KuL" alt="email-senha" width="99%" height="90%">
-
-<img src="https://governosp-my.sharepoint.com/:i:/r/personal/amaral_felipe_apoioprodesp_sp_gov_br/Documents/Arquivos%20de%20Chat%20do%20Microsoft%20Teams/Felipe%20-%20PC/popi/nova-senha.png?csf=1&web=1&e=oSoP98" alt="nova-senha" width="99%" height="90%">
-
-<img src="https://governosp-my.sharepoint.com/:i:/r/personal/amaral_felipe_apoioprodesp_sp_gov_br/Documents/Arquivos%20de%20Chat%20do%20Microsoft%20Teams/Felipe%20-%20PC/popi/solicite.png?csf=1&web=1&e=Op6N91" alt="solicite" width="99%" height="90%">
-
-<img src="https://governosp-my.sharepoint.com/:i:/r/personal/amaral_felipe_apoioprodesp_sp_gov_br/Documents/Arquivos%20de%20Chat%20do%20Microsoft%20Teams/Felipe%20-%20PC/popi/reset-senha.png?csf=1&web=1&e=TkjH1R" alt="reset-senha" width="99%" height="90%">
-
-O procedimento deu certo?
-
-<a href="https://www.bancodopovo.sp.gov.br/" target="_blank">CLICANDO AQUI</a>
-
-
-------------
-
-<div class="box-btn-inicial">
-    <div class="btn-primary col-99 btn-inicio" onclick="accounType('Cadastro Básico')">Cadastro Básico</div>
-    <div class="btn-primary col-99 btn-inicio" onclick="accounType('Dados do Empreendimento')">Dados do Empreendimento</div>
-    <div class="btn-primary col-99 btn-inicio" onclick="accounType('Financiamento de Interesse')">Financiamento de Interesse</div>
-    <div class="btn-primary col-99 btn-inicio" onclick="accounType('Custo de Negócio')">Custo de Negócio</div>
-    <div class="btn-primary col-99 btn-inicio" onclick="accounType('Pessoa Física')">Pessoa Física</div>
-    <div class="btn-primary col-99 btn-inicio" onclick="accounType('Impressão e Anexos')">Impressão e Anexos</div>
-</div>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                nome: "Felipe",
+                sobrenome: "Amaral",
+                countriesData: {},
+                paisSelecionado: "",
+                capitalSelecionada: "",
+            },
+            methods: {
+                getData() {
+                    fetch("https://restcountries.eu/rest/v2/all")
+                    .then(resp => resp.json())
+                    .then(resp => {
+                        this.countriesData = resp
+                    })
+                },
+                findCapital(cs) { //podia ter o find dessa função dentro do Watch
+                    const country = this.countriesData.find(({name}) => name === cs) //find ao invés de filter pois tem que retornar um unico valor
+                    console.log(country.name,": ",country.capital)
+                    this.capitalSelecionada = country.capital
+                }
+            },
+            computed: {
+                nomeCompleto() {
+                    return this.nome+" "+this.sobrenome
+                },
+            },
+            watch: {
+                paisSelecionado(lastCountry) {
+                    this.findCapital(lastCountry)
+                }
+            }
+        })
+    </script>
+</body>
+</html>
