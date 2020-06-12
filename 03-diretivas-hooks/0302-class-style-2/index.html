@@ -8,11 +8,11 @@
 </head>
 <body>
     <div id="app">
-        <ul :class="{column: listType}">
-            <li>Sobre</li>
-            <li>Produtos</li>
-            <li>Serviços</li>
-            <li>Contato</li>
+        <ul :class="{column: listType}" @click="alterarBG">
+            <li :style="{background: bg}">Sobre</li>
+            <li :style="{background: bg}">Produtos</li>
+            <li :style="{background: bg}">Serviços</li>
+            <li :style="{background: bg}">Contato</li>
         </ul>
         <button @click="listType = !listType">Alternar</button>
     </div>
@@ -44,8 +44,15 @@
         const vm = new Vue({
             el: "#app",
             data: {
-                listType: true,
-            }
+                listType: false,
+                bg: "#84e",
+            },
+            methods: {
+                alterarBG() {
+                    const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    this.bg = color;
+                },
+            },
         })
     </script>
 </body>
