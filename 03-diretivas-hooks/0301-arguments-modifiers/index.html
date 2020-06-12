@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="/vue.js"></script>
+    <title>Document</title>
+    <!-- v-on:click.prevent -->
+    <!-- diretiva:argumento.modificador -->
+</head>
+<body>
+    <div id="app">
+        <p :class="cor1">Texto</p>
+        <p :class="{ativaBG: statusBG, red: statusCor}">Alternando entre True e False</p>
+        <button @click="alterarStatus">Ativar/Desativar</button>
+        <p :class="[bg, cor2]">Mais de uma classe em um array</p>
+        <p :style="{color:cor3, fontSize: font+'px'}">Aplicando style diretamente, sem classes 1</p>
+        <button @click="font++">Aumenta a fonte</button>
+        <p :style="modelo">Aplicando style diretamente, sem classes 2</p>
+        <p :style="randomFont">Aplicando style diretamente, sem classes 3</p>
+    </div>
+    
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                cor1: "azul",
+                cor2: "red",
+                cor3: "#8B008B",
+                bg: "ativaBG",
+                statusBG: true,
+                statusCor: false,
+                font: 12,
+                modelo: {
+                    color: "#8B008B",
+                    fontSize: "12px",
+                }
+            },
+            methods: {
+                alterarStatus() {
+                    this.statusBG = !this.statusBG;
+                    this.statusCor = !this.statusCor;
+                },
+            },
+            computed: {
+                randomFont() {
+                    let size = Math.random() * 100;
+                    return {
+                        fontSize: size+"px"
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
