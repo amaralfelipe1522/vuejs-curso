@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app1">
+        <label for="input-width">Escolha a largura do botão:</label>
+        <input type="text" id="input-width" v-model.number ="width">
+        <button :style="{width: width+'px'}">Width</button><br>
+
+        <label for="input-height">Escolha a altura do botão:</label>
+        <input type="text" id="input-height" v-model.number ="height">
+        <button :style="{height: height+'px'}">Height</button><br>
+
+        <label for="input-font-size">Escolha o tamanho da fonte:</label>
+        <input type="text" id="input-font-size" v-model.number ="fontSize">
+        <button :style="{fontSize: fontSize+'px'}">Font Size</button><br>
+
+        <label for="input-font-family">Escolha o estilo da fonte:</label>
+        <input type="text" id="input-font-family" v-model ="fontFamily">
+        <button :style="{fontFamily: fontFamily}">Font Family</button><br>
+
+        <label for="input-text-align">Escolha o alinhamento do texto:</label>
+        <input type="text" id="input-text-align" v-model ="textAlign">
+        <button :style="{textAlign: textAlign}">Text Align</button><br>
+
+        <!-- <label for="input-background">Escolha o background:</label>
+        <input type="text" id="input-background" v-model ="background">
+        <button :style="{background: background}">Background</button><br> -->
+
+        <label for="input-color">Escolha a cor do botão:</label>
+        <input type="text" id="input-color" v-model ="color">
+        <button :style="{color: color}">Color</button><br>
+
+        <label for="input-border-radius">Escolha a borda:</label>
+        <input type="text" id="input-border-radius" v-model.number ="borderRadius">
+        <button :style="{borderRadius: borderRadius+'px'}">Border Radius</button><br>
+    </div>
+
+    <script>
+        const vm1 = new Vue({
+            el: "#app1",
+            data: {
+                width: 10,
+                height: 10,
+                fontSize: 20,
+                fontFamily: "'Times New Roman', Times, serif",
+                textAlign: "right",
+                color: "blue",
+                borderRadius: "50px 20px;",
+            }
+        })
+    </script>
+</body>
+</html>
