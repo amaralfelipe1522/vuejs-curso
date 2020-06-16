@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- two-way : tanto mudanças no JS como no DOM, mudam o conteúdo -->
+        <p><input type="text" v-model="nome"></p>
+        <p><textarea name="textarea" id="textarea" cols="30" rows="10" v-model="comentario"></textarea></p>
+        <p>{{nome}}</p>
+        <p>{{comentario}}</p>
+        <!-- one-way : mudanças no JS criam mudanças no DOM -->
+        <p><input type="text" :value="nome"></p>
+        <!-- retorna boolean -->
+        <input type="checkbox" v-model="notificacao" id="notificacao">
+        <label for="notificacao">Deseja ser notificado? {{notificacao}}</label><br>
+        
+        <p>Selecione a cor desejada:</p>
+        <input type="radio" v-model="cor" id="azul" value="Azul">
+        <label for="azul">Azul</label>
+        <input type="radio" v-model="cor" id="vermelho" value="Vermelho">
+        <label for="vermelho">Vermelho</label>
+        <p>Cor selecionada: {{cor}}</p><br>
+
+        <select name="frutas" id="frutas" v-model="fruta">
+            <option disabled value>Selecione uma fruta</option>
+            <option value="Banana">Banana</option>
+            <option value="Maçã">Maçã</option>
+            <option value="Limão">Limão</option>
+        </select>
+        <p>Fruta selecionada: {{fruta}}</p>
+
+        <!-- Modificadores -->
+        <input type="text" v-model.lazy="busca">
+        <p>Resultado da Busca: {{busca}}</p>
+
+        <input type="text" v-model.number="rg">
+        <p>RG: {{rg}}</p>
+
+        <input type="text" v-model.trim="textoComEspaco">
+        <p>Texto sem espaços: {{textoComEspaco}}</p>
+
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                nome: "",
+                comentario: "",
+                notificacao: true,
+                cor: "",
+                fruta: "",
+                busca: "",
+                rg: 0,
+                textoComEspaco: "",
+            }
+        })
+    </script>
+</body>
+</html>
