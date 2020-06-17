@@ -9,49 +9,112 @@
 <body>
     <div id="app1">
         <label for="input-width">Escolha a largura do botão:</label>
-        <input type="text" id="input-width" v-model.number ="width">
+        <input type="number" id="input-width" v-model.number ="width">
         <button :style="{width: width+'px'}">Width</button><br>
 
         <label for="input-height">Escolha a altura do botão:</label>
-        <input type="text" id="input-height" v-model.number ="height">
+        <input type="number" id="input-height" v-model.number ="height">
         <button :style="{height: height+'px'}">Height</button><br>
 
         <label for="input-font-size">Escolha o tamanho da fonte:</label>
-        <input type="text" id="input-font-size" v-model.number ="fontSize">
+        <input type="number" id="input-font-size" v-model.number ="fontSize">
         <button :style="{fontSize: fontSize+'px'}">Font Size</button><br>
 
-        <label for="input-font-family">Escolha o estilo da fonte:</label>
-        <input type="text" id="input-font-family" v-model ="fontFamily">
+        <select name="select-font-famlily" id="select-font-famlily" v-model="fontFamily">
+            <option disabled value>Escolha o estilo da fonte</option>
+            <option value="'Times New Roman', Times, serif">"Times New Roman", Times, serif</option>
+            <option value="Arial, Helvetica, sans-serif">Arial, Helvetica, sans-serif</option>
+        </select>
         <button :style="{fontFamily: fontFamily}">Font Family</button><br>
+    
+        <select name="select-text-align" id="select-text-align" v-model="textAlign">
+            <option disabled value>Selecione o alinhamento</option>
+            <option value="center">Center</option>
+            <option value="right">Right</option>
+            <option value="justify">Justify</option>
+        </select>
+        <button :style="{textAlign: textAlign, width: width+'px'}">Text Align</button><br>
 
-        <label for="input-text-align">Escolha o alinhamento do texto:</label>
-        <input type="text" id="input-text-align" v-model ="textAlign">
-        <button :style="{textAlign: textAlign}">Text Align</button><br>
-
-        <!-- <label for="input-background">Escolha o background:</label>
-        <input type="text" id="input-background" v-model ="background">
-        <button :style="{background: background}">Background</button><br> -->
+        <label for="input-background">Escolha o background:</label>
+        <input type="color" id="input-background" v-model ="background">
+        <button :style="{background: background}">Background</button><br>
 
         <label for="input-color">Escolha a cor do botão:</label>
-        <input type="text" id="input-color" v-model ="color">
+        <input type="color" id="input-color" v-model ="color">
         <button :style="{color: color}">Color</button><br>
 
         <label for="input-border-radius">Escolha a borda:</label>
-        <input type="text" id="input-border-radius" v-model.number ="borderRadius">
+        <input type="range" id="input-border-radius" v-model ="borderRadius" min="0" max="25">
         <button :style="{borderRadius: borderRadius+'px'}">Border Radius</button><br>
-    </div>
+        <!-- Exemplo mal feito de todos os estilos, para futura consulta -->
+        <button :style="btnStyle">Todos os estilos</button>
+    </div><br><br>
 
     <script>
         const vm1 = new Vue({
             el: "#app1",
             data: {
-                width: 10,
-                height: 10,
+                width: 120,
+                height: 40,
                 fontSize: 20,
-                fontFamily: "'Times New Roman', Times, serif",
-                textAlign: "right",
-                color: "blue",
-                borderRadius: "50px 20px;",
+                fontFamily: "",
+                textAlign: "",
+                color: "",
+                borderRadius: 0,
+                background: "",
+                btnStyle: {
+                    width: 120,
+                    height: 40,
+                    fontSize: 20,
+                    fontFamily: "",
+                    textAlign: "",
+                    color: "",
+                    borderRadius: 0,
+                    background: "",
+                }
+            },
+            watch: {
+                width(valor) {
+                    this.btnStyle.width = valor+"px";
+                },
+            }
+        })
+    </script>
+
+    <div id="app2">
+        <form>
+            <label for="nome">Informe seu nome</label>
+            <input type="text" id="nome" v-model.lazy="nome"><br>
+            <label for="email">Informe seu e-mail</label>
+            <input type="email" id="email" v-model.lazy="email"><br>
+            <label for="telefone">Informe seu telefone</label>
+            <input type="tel" id="telefone" v-model.lazy="telefone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"><br>
+            <textarea name="scrap" id="scrap" cols="30" rows="10" v-model.lazy="mensagem"></textarea><br>
+            <input type="submit" @click.prevent="enviarForm">
+        </form>
+        <ul v-show="ativo">
+            <li>Nome: {{nome}}</li>
+            <li>E-mail: {{email}}</li>
+            <li>Telefone: {{telefone}}</li>
+            <li>Mensagem: {{mensagem}}</li>
+        </ul>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app2",
+            data: {
+                nome: "",
+                email: "",
+                telefone: "",
+                mensagem: "",
+                ativo: false,
+            },
+            methods: {
+                enviarForm() {
+                    this.ativo = true
+                    //tb poderia criar um objeto de resultado que recebe todos esses valores
+                }
             }
         })
     </script>
