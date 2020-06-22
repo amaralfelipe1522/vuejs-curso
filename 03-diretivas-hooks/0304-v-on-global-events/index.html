@@ -7,6 +7,55 @@
     <title>Document</title>
 </head>
 <body>
+    <!-- DA PRA CRIAR JOGO COM ISSO KKKKK -->
+    <div id="app">
+        <!-- Ao pressionar (down) e ao soltar (up) a tecla -->
+        <label for="any-key">Any Key</label>
+        <input type="text" id="any-key" @keyup="anyKey" @keydown="anyKey"><br>
+        <!-- Com modificadores eu especifico qual tecla quero capturar -->
+        <label for="key-enter">Only Enter</label>
+        <input type="text" id="key-enter" @keyup.enter="enter"><br>
+        <!-- O mesmo vale para o v-on de Click -->
+        <button @click.left="clickEvent">Only Left Click</button>
+        <button @click.right="clickEvent">Only Right Click</button>
+        <button @click.middle="clickEvent">Only Middle Click</button>
+        <button @click.alt="clickEvent">Only Press Alt</button>
+
+        <!-- eventos globais -->
+        <p style="position: fixed;">Total Scroll {{totalScroll}}</p>
+    </div>
+
+    <style>
+        body {
+            height: 2000px;
+        }
+    </style>
     
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                totalScroll: 0,
+            },
+            methods: {
+                anyKey(event) {
+                    console.log(event);
+                },
+                enter() {
+                    console.log("Pressionou o enter")
+                },
+                clickEvent(event) {
+                    event.currentTarget.style.color = "red"
+                },
+                handleScroll() {
+                    this.totalScroll = window.scrollY;
+                },
+            },
+            created() { //Created é um hook que executa ao iniciar o Vue
+                window.addEventListener("scroll", this.handleScroll)
+                window.addEventListener("keyup", this.anyKey)
+            }
+        })
+    </script>
 </body>
 </html>
