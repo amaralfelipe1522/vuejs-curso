@@ -7,6 +7,72 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <!-- beforeCreate
+        created
+        beforeMount
+        mounted
+        beforeUpdate
+        updated 
+        beforeDestroy
+        destroyed -->
+
+        <div id="app">
+            <button @click="contador++">{{contador}}</button>
+            <button @click="destruir">Destruir Reatividade</button>
+            <p>Dados da API ativadas no Created: {{dataGit}}</p>
+        </div>
+
+        <script>
+            const vm = new Vue({
+                el: "#app",
+                data: {
+                    dataGit: {},
+                    mensagem: "Aparece???",
+                    contador: 0,
+                },
+                methods: {
+                    getGit() {
+                        fetch("https://api.github.com/users/amaralfelipe1522")
+                        .then(resp => resp.json())
+                        .then(resp => {
+                            this.dataGit = resp;
+                        })
+                    },
+                    destruir() {
+                        this.$destroy();
+                    },
+                },
+                beforeCreate() {
+                    console.log("Antes de iniciar qualquer coisa");
+                    console.log(this.mensagem);
+                },
+                created() {
+                    console.log("Em Created é um ótimo momento para chamar uma API");
+                    console.log(this.mensagem);
+                    console.log("Elemento: ",this.$el) //Não tem o DOM montado, apenas criou os elementos reativos
+                    this.getGit();
+                },
+                beforeMount() {
+                    console.log("Elemento: ",this.$el) //Tem o DOM montado
+                },
+                mounted() {
+                    console.log("Elemento: ",this.$el) //Tem o DOM montado e populado com a reatividade
+                },
+                beforeUpdate() {
+                    console.log("Valor do contador antes da reatividade: ",this.contador) //QUALQUER reatividade
+                },
+                updated() {
+                    console.log("Valor do contador depois da reatividade: ",this.contador) //QUALQUER reatividade
+                },
+                beforeDestroy() {
+                    console.log("Vai destruir");
+                    this.contador + 10;
+                },
+                destroyed() {
+                    console.log("Destruiu a reatividade");
+                    this.contador + 10;
+                }
+            })
+        </script>
 </body>
 </html>
